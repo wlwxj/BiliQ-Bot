@@ -23,6 +23,7 @@ def group_message():
 
 
 def channel_message():
+    # 频道消息
     channel_url = 'http://127.0.0.1:5700/send_guild_channel_msg'
     channel_msg = input('input message:\n')
     channel_data = {
