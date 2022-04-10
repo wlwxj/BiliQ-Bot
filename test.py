@@ -9,10 +9,12 @@ headers = {
 
 
 def group_message():
+    # 群组消息
     group_url = 'http://127.0.0.1:5700/send_group_msg'
+    group_msg = input('input message:\n')
     data = {
         'group_id': '732633112',
-        'message': 'test1',
+        'message': group_msg,
     }
 
     resp = requests.post(url=group_url, data=data, headers=headers).json()
@@ -22,16 +24,21 @@ def group_message():
 
 def channel_message():
     channel_url = 'http://127.0.0.1:5700/send_guild_channel_msg'
+    channel_msg = input('input message:\n')
     channel_data = {
         'guild_id': '93473511649415396',
         'channel_id': '4913181',
-        'message': 'test',
+        'message': channel_msg,
 
     }
     resp = requests.post(url=channel_url, data=channel_data, headers=headers).json()
+
     print(resp)
 
 
 if __name__ == '__main__':
-    # group_message()
-    channel_message()
+    send_location = input('input send location(group:0, channel:1):\n')
+    if int(send_location) == 0:
+        group_message()
+    elif int(send_location) == 1:
+        channel_message()
