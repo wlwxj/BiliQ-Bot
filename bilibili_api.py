@@ -56,17 +56,26 @@ def dynamic_type_2(uid):
 
     dynamic_resp = requests.get(url=dynamic_url, params=dynamic_param, headers=headers).json()
 
-    latest_dynamic = dynamic_resp['data']['cards'][1]['card']
+    latest_dynamic = dynamic_resp['data']['cards'][0]['card']
     # print(latest_dynamic)
 
-    text_obj = re.compile(r'\"description\":\"(.*?)\",', re.S)
-    image_obj = re.compile(r'https:\\/\\/i0\.hdslb\.com\\/bfs\\/album\\/(.*?)\.png', re.S)
+    text_obj = re.compile(r'"description":"(.*?)",', re.S)
+    image_obj_png = re.compile(r'https:\\/\\/i0\.hdslb\.com\\/bfs\\/album\\/(.*?)\.png', re.S)
+    image_obj_jpg = re.compile(r'https:\\/\\/i0\.hdslb\.com\\/bfs\\/album\\/(.*?)\.jpg', re.S)
+
     text = text_obj.findall(str(latest_dynamic))
-    src = image_obj.findall(str(latest_dynamic))
+    src = image_obj_png.findall(str(latest_dynamic))
+    while src:
+        image_url = 'https://i0.hdslb.com/bfs/album/' + src[0] + '.png'
+        break
+    else:
+        src = image_obj_jpg.findall(str(latest_dynamic))
+        image_url = 'https://i0.hdslb.com/bfs/album/' + src[0] + '.jpg'
+
     # print(text)
     # print(src)
-    image_url = 'https://i0.hdslb.com/bfs/album/'+src[0]+'.png'
-    ret.append(text)
+
+    ret.append(text[0])
     ret.append(image_url)
 
     return ret
@@ -82,8 +91,8 @@ def get_dynamic_id(uid):
     }
 
     dynamic_resp = requests.get(url=dynamic_url, params=dynamic_param, headers=headers).json()
-
-    dynamic_id = dynamic_resp['data']['cards'][1]['desc']['dynamic_id']
+    # print(dynamic_resp)
+    dynamic_id = dynamic_resp['data']['cards'][0]['desc']['dynamic_id']
 
     return dynamic_id
 
