@@ -4,7 +4,7 @@
 # @File : main.py.py
 # @Development Environment : PyCharm
 
-from bilibili_api import get_live_status, get_newest_dynamic_type, dynamic_type_2
+from bilibili_api import get_live_status, get_newest_dynamic_type, dynamic_type_2,get_dynamic_id
 import requests
 import os
 
@@ -15,4 +15,4 @@ if __name__ == '__main__':
     uid = '43584648'
     # print(get_newest_dynamic_type(uid))
     print(dynamic_type_2(str(uid)))
-
+    print(get_dynamic_id(str(uid)))

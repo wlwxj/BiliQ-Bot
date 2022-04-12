@@ -11,6 +11,7 @@ import re
 headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36'
     }
+dynamic_url = 'https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?'
 
 
 def get_live_status(room_id):
@@ -29,7 +30,6 @@ def get_live_status(room_id):
 
 
 def get_newest_dynamic_type(uid):
-    dynamic_url = 'https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?'
     dynamic_param = {
         'visitor_uid':  '',
         'host_uid': uid,
@@ -46,7 +46,6 @@ def get_newest_dynamic_type(uid):
 
 def dynamic_type_2(uid):
     ret = []
-    dynamic_url = 'https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?'
     dynamic_param = {
         'visitor_uid': '',
         'host_uid': uid,
@@ -71,6 +70,22 @@ def dynamic_type_2(uid):
     ret.append(image_url)
 
     return ret
+
+
+def get_dynamic_id(uid):
+    dynamic_param = {
+        'visitor_uid': '',
+        'host_uid': uid,
+        'offset_dynamic_id': '0',
+        'need_top': '1',
+        'platform': 'web',
+    }
+
+    dynamic_resp = requests.get(url=dynamic_url, params=dynamic_param, headers=headers).json()
+
+    dynamic_id = dynamic_resp['data']['cards'][1]['desc']['dynamic_id']
+
+    return dynamic_id
 
 
 if __name__ == '__main__':
