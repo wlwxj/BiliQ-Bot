@@ -4,6 +4,7 @@
 # @File : bilibili_api.py
 # @Development Environment : PyCharm
 
+from cgitb import text
 import requests
 import json
 import re
@@ -55,7 +56,6 @@ def dynamic_type_2(uid):
     }
 
     dynamic_resp = requests.get(url=dynamic_url, params=dynamic_param, headers=headers).json()
-
     latest_dynamic = dynamic_resp['data']['cards'][0]['card']
     # print(latest_dynamic)
 
@@ -79,6 +79,22 @@ def dynamic_type_2(uid):
     ret.append(image_url)
 
     return ret
+
+
+def dynamic_type_4(uid):
+    dynamic_param = {
+        'visitor_uid': '',
+        'host_uid': uid,
+        'offset_dynamic_id': '0',
+        'need_top': '1',
+        'platform': 'web',
+    }
+    dynamic_resp = requests.get(url=dynamic_url, params=dynamic_param, headers=headers).json()
+    latest_dynamic = dynamic_resp['data']['cards'][0]['card']
+
+    obj = re.compile(r'"content": "(.*?)", ', re.S)
+    text = obj.findall(latest_dynamic)
+    return text
 
 
 def get_dynamic_id(uid):

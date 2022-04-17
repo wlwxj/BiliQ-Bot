@@ -4,8 +4,8 @@
 # @File : main.py.py
 # @Development Environment : PyCharm
 
-from bilibili_api import get_live_status, get_newest_dynamic_type, dynamic_type_2, get_dynamic_id
-from test import group_message, channel_message
+from bilibili_api import dynamic_type_4, get_live_status, get_newest_dynamic_type, dynamic_type_2
+from to_QQ import group_message, channel_message
 import requests
 import os
 
@@ -19,10 +19,11 @@ if __name__ == '__main__':
     # room_id = input()
     # print(get_live_status(room_id))
 
-    uid = '1437582453'
-    # print(get_newest_dynamic_type(uid))
-    # print(dynamic_type_2(str(uid)))
-    # print(get_dynamic_id(str(uid)))
-    msg = uid+'发送了动态\n'+str(dynamic_type_2(str(uid))[0])+'[CQ:image,file='+str(dynamic_type_2(str(uid))[1])+',type=show]'
-
-    print(channel_message(msg))
+    uid = '1119663253'
+    dynamic_type = get_newest_dynamic_type(uid)
+    if dynamic_type == 2:
+        msg = uid+'发送了动态\n'+str(dynamic_type_2(str(uid))[0])+'[CQ:image,file='+str(dynamic_type_2(str(uid))[1])+',type=show]'
+    elif dynamic_type == 4:
+        msg = uid+'发送了动态\n'+str(dynamic_type_4(uid)[0])
+    print(msg)
+    # print(channel_message(msg))
