@@ -13,7 +13,13 @@ headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36'
     }
 dynamic_url = 'https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?'
-
+# dynamic_param = {
+#         'visitor_uid':  '',
+#         'host_uid': uid,
+#         'offset_dynamic_id': '0',
+#         'need_top': '1',
+#         'platform': 'web',
+#     }
 
 def get_live_status(room_id):
     # 获取直播间状态
@@ -96,6 +102,18 @@ def dynamic_type_4(uid):
     text = obj.findall(latest_dynamic)
     return text
 
+
+def dynamic_type_0(uid):
+    dynamic_param = {
+        'visitor_uid': '',
+        'host_uid': uid,
+        'offset_dynamic_id': '0',
+        'need_top': '1',
+        'platform': 'web',
+    }
+    dynamic_resp = requests.get(url=dynamic_url, params=dynamic_param, headers=headers).json()
+    
+   
 
 def get_dynamic_id(uid):
     dynamic_param = {
